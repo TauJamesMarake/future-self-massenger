@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Self Messenger</title>
+    <meta name="description" content="Send messages to your future self">
+    <meta author="Tau J. Marake" developer="Tau J. Marake">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="dark-mode">
+
+    <!-- Welcome screen -->
+    <div id="welcome-screen" class="page active">
+        <div class="particle" style="left: 10%; top: 20%;"></div>
+        <div class="particle" style="left: 80%; top: 30%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 20%; top: 70%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 90%; top: 60%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 50%; top: 10%; animation-delay: 0.5s;"></div>
+
+        <div class="welcome-content">
+            <h1>✨</h1>
+            <h1>Future Self</h1>
+            <p>Send messages to your future self. Because tomorrow's <strong>you</strong> is probably gonna need advice
+                from the past, lol. Plus, it's fun!</p>
+        </div>
+    </div>
+
+
+    <!-- Homepage -->
+    <div id="homepage" class="page">
+        <div class="container">
+
+            <div class="header">
+                <h1>FSM</h1>
+                <button id="global-theme-toggle" class="theme-toggle">🌙</button>
+                <!-- <div id="toggle-placeholder"></div> -->
+            </div>
+
+            <div class="card" onclick="goToPage('future-self')">
+                <h2>📬 To Future Self</h2>
+                <p>Send a message to yourself in the future</p>
+            </div>
+
+            <div class="card" onclick="goToPage('developer')">
+                <h2>💬 Message Dev</h2>
+                <p>Leave feedback or say hi to the developer</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Confirmation modal -->
+    <!-- <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Message</h2>
+                <p>Review before sending</p>
+            </div>
+
+            <div class="modal-message" id="modal-message-display"></div>
+
+            <div class="modal-details" id="modal-details"></div>
+
+            <div class="modal-buttons">
+                <button class="confirm" onclick="sendMessage()">Send</button>
+                <button class="edit" onclick="closeConfirmation()">Edit</button>
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Success popup -->
+    <!-- <div id="success-popup" class="success-popup" style="display: none;">
+        <h2>Message Sent!</h2>
+        <p id="success-message">Your message is on its way</p>
+    </div> -->
+
+    <!-- Loading indicator -->
+    <!-- <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Sending message...</p>
+    </div> -->
+
+    <script src="./js/home.js"></script>
+</body>
+
+</html>
