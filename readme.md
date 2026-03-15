@@ -207,5 +207,5 @@ Use the app's dev feedback form!
 
 ---
 
-*Built with ❤️ by Tau J. Marake*
+*Built by Tau J. Marake*
 
