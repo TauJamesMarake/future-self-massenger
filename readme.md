@@ -1,244 +1,211 @@
+# Future Self Messenger ✨
 
-# Future Self Messenger
+[![Node.js](https://img.shields.io/badge/Node.js-v18-green)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express-4.18-blue.svg)](https://expressjs.com)
+[![Supabase](https://img.shields.io/badge/Supabase-2.39-purple)](https://supabase.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Send messages to your future self with scheduled email delivery. Built with vanilla HTML/CSS/JS frontend and Node.js backend.
+Send messages to your future self with scheduled email delivery. Built with vanilla HTML/CSS/JS frontend and Node.js/Express backend powered by Supabase.
 
-## Features
+## 🚀 Quick Start
+
+```bash
+# Terminal 1: Backend
+cd backend
+npm install
+npm run dev  # http://localhost:5000
+
+# Terminal 2: Frontend
+cd frontend
+python -m http.server 3000  # or npx http-server
+# Open http://localhost:3000
+```
+
+## ✨ Features
 
 - 📬 Send messages to your future self
 - 💬 Leave feedback for the developer
 - ⏰ Schedule messages for future dates/times
 - 🌙 Light/Dark mode toggle
-- 📧 Email delivery via SMTP
+- 📧 Email delivery via SMTP/Nodemailer
 - 🎨 Modern, playful UI with Fredoka One font
 - 💾 Fully responsive design
-- 🔄 Automatic scheduled message delivery
+- 🔄 Automatic scheduled message delivery via cron
+- 🛢️ Supabase PostgreSQL database
+- ✅ Health checks and API testing endpoints
 
-## Project Structure
+## 📸 Screenshots
+
+### Homepage
+![Homepage Light Mode](screenshots/homepage-light.png)
+![Homepage Dark Mode](screenshots/homepage-dark.png)
+
+### Send to Future Self Form
+![Future Self Form](screenshots/future-self-form.png)
+
+### Developer Feedback
+![Dev Feedback](screenshots/dev-feedback.png)
+
+*To add screenshots: Run the app locally, take browser screenshots of key pages, save to `/screenshots/` folder.*
+
+## 🗂️ Project Structure
 
 ```
-future-self-messenger/
+future-massenger/
 ├── frontend/
 │   ├── index.html
+│   ├── message-input.html
 │   ├── styles.css
-│   ├── app.js
+│   └── js/
+│       ├── app.js
+│       ├── home.js
+│       └── message-input.js
 ├── backend/
 │   ├── server.js
 │   ├── package.json
-│   ├── .env.example
 │   ├── config/
-│   │   └── email.js
+│   │   ├── email.js
+│   │   └── readme.md
 │   ├── routes/
 │   │   └── messages.js
-│   ├── jobs/
-│   │   └── scheduler.js
+│   └── jobs/
+│       └── scheduler.js
 ├── .gitignore
-└── README.md
+├── TODO.md
+└── readme.md
 ```
 
-## Backend Setup
+## 🔧 Backend Setup
 
 ### Prerequisites
-- Node.js v14+
-- npm or yarn
-- Gmail account (for email sending)
+- Node.js v18+
+- npm
+- Supabase account/project
+- Gmail (for emails)
 
 ### Installation
+1. ```bash
+   cd backend
+   npm install
+   ```
 
-1. Navigate to backend directory:
+2. **Supabase Setup**:
+   - Create project at [supabase.com](https://supabase.com)
+   - Create `messages` table (or auto via app):
+     ```sql
+     CREATE TABLE messages (
+       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+       content TEXT NOT NULL,
+       email TEXT,
+       scheduled_at TIMESTAMP,
+       sent_at TIMESTAMP,
+       status TEXT DEFAULT 'pending',
+       created_at TIMESTAMP DEFAULT NOW()
+     );
+     ```
+   - Add `SUPABASE_URL` and `SUPABASE_ANON_KEY` to `.env`
+
+3. **Email Config** (`.env`):
+   ```
+   PORT=5000
+   FRONTEND_URL=http://localhost:3000
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_key
+   EMAIL_SERVICE=gmail
+   EMAIL_USER=your@gmail.com
+   EMAIL_PASSWORD=app_password
+   DEV_EMAIL=dev@example.com
+   ```
+
+4. Gmail App Password: [Generate here](https://myaccount.google.com/apppasswords)
+
+### Run Backend
 ```bash
-cd backend
-```
-
-2. Install dependencies:
-```bash
-
-npm install
-```
-
-3. Create `.env` file from `.env.example`:
-```bash
-cp .env.example .env
-```
-
-4. Fill in your email credentials in `.env`:
-```
-PORT=5000
-FRONTEND_URL=http://localhost:3000
-EMAIL_SERVICE=gmail
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
-DEV_EMAIL=dev@example.com
-```
-
-### Email Setup (Gmail)
-
-1. Enable 2-Factor Authentication on your 
-
-Google Account
-2. Generate an App Password: https://myaccount.google.com/apppasswords
-3. Use the generated password in `.env` as `EMAIL_PASSWORD`
-
-### Running the Backend
-
-```bash
-# Development with auto-reload
-npm run dev
-
-# Production
+npm run dev  # nodemon
+# or
 npm start
 ```
 
-Server runs on `http://localhost:5000`
+## 🌐 Frontend Setup
+Pure static files - no build step!
 
-## Frontend Setup
+1. Update `js/app.js` API_URL if needed:
+   ```js
+   const API_URL = 'http://localhost:5000/api';
+   ```
 
-### Prerequisites
+2. Serve:
+   ```bash
+   cd frontend
+   npx http-server -p 3000  # or python -m http.server 3000
+   ```
 
-- Modern web browser
-- Web server (for local testing)
+## 📡 API Endpoints
 
-### Installation
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/messages/send-immediate` | Send now |
+| `POST` | `/api/messages/send-scheduled` | Schedule future |
+| `GET` | `/api/messages/all` | List all (admin) |
+| `GET` | `/api/health` | Server status |
+| `GET` | `/api/test-connection` | Supabase check |
 
-1. Navigate to frontend directory:
+Example (curl):
 ```bash
-cd frontend
+curl -X POST http://localhost:5000/api/messages/send-immediate \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello future!"}'
 ```
 
-2. Update API_URL in `js/app.js` if backend is on different URL:
-```javascript
-const API_URL = 'http://localhost:5000/api';
-```
+## ☁️ Deployment
 
-3. Run a local server:
+### Backend (Railway/Render/Supabase Edge Functions)
+1. Push to GitHub.
+2. Connect to [Railway](https://railway.app).
+3. Set env vars.
+4. `npm start` as start cmd.
+
+### Frontend (Vercel/Netlify/GitHub Pages)
+1. Drag `frontend/` folder or push to `gh-pages`.
+2. Set root dir to `/frontend`.
+3. Update API_URL to production backend.
+
+Heroku (legacy):
 ```bash
-# Using Python 3
-python -m http.server 3000
-
-# Using Node.js
-npx http-server -p 3000
-
-# Using PHP
-php -S localhost:3000
-```
-
-4. Open browser to `http://localhost:3000`
-
-## API Endpoints
-
-### Send Message Immediately
-```
-POST /api/messages/send-immediate
-Content-Type: application/json
-
-{
-  "message": "Your message here"
-}
-```
-
-### Schedule Message
-```
-POST /api/messages/send-scheduled
-Content-Type: application/json
-
-{
-  "message": "Your message here",
-  "email": "user@example.com",
-  "scheduledDate": "2025-12-31",
-  "scheduledTime": "18:00"
-}
-```
-
-### Get All Messages (Admin)
-```
-GET /api/messages/all
-```
-
-### Health Check
-```
-GET /api/health
-
-```
-
-## Deployment
-
-### Deploy Backend to Heroku
-
-1. Create Heroku account and install CLI
-2. Login:
-```bash
-heroku login
-```
-
-3. Create app:
-```bash
-heroku create your-app-name
-```
-
-4. Set environment variables:
-```bash
-heroku config:set EMAIL_USER=jtaumarake@gmail.com
-
-heroku config:set EMAIL_PASSWORD=your-app-password
-heroku config:set DEV_EMAIL=dev@example.com
-heroku config:set FRONTEND_URL=https://your-frontend-url.com
-```
-
-5. Deploy:
-```bash
+heroku config:set SUPABASE_URL=...  # etc.
 git push heroku main
 ```
 
-### Deploy Frontend to GitHub Pages
-
-1. Push frontend folder to gh-pages branch
-2. Go to Settings > Pages in your GitHub repo
-3. Select `gh-pages` branch as source
-4. Update `API_URL` in `js/app.js` to point to deployed backend
-
-
-## echnology Stack
+## 🛠️ Technology Stack
 
 **Frontend:**
-- HTML5
-- CSS3 (with animations)
-- Vanilla JavaScript (ES6+)
-- Fredoka One font
+- HTML5, CSS3 (animations), Vanilla JS (ES6+)
+- Fredoka One (Google Fonts)
 
 **Backend:**
 - Node.js + Express.js
-- SQLite3 (database)
+- Supabase (PostgreSQL + Auth)
 - Nodemailer (email)
 - node-cron (scheduling)
-- CORS
+- dotenv, CORS
 
-## Security Notes
+## 🔒 Security
+- `.env` gitignored
+- App passwords for email
+- CORS restricted to frontend origin
+- No auth needed (public app)
 
-- `.env` files are never committed (in .gitignore)
-- Email passwords should use App 
+## 📄 License
+MIT License - Fork away!
 
-Passwords, not real passwords
-- CORS is configured to accept requests from frontend URL only
-- No user authentication required
-- Messages stored with timestamps for reference
+## 🤝 Contributing
+- Report issues/PRs welcome
+- Add features (e.g., auth, multiple recipients)
 
-## License
-
-MIT License - feel free to fork and modify!
-
-## Contributing
-
-Contributions welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
-
-## Support
-
-For issues or questions:
-
-1. Check existing issues on GitHub
-2. Open a new issue with details
-3. Leave a message via the app!
+## 💬 Support
+Use the app's dev feedback form!
 
 ---
+
+*Built with ❤️ by Tau J. Marake*
+
