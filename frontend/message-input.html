@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Self Messenger - Message</title>
+
+    <meta name="description" content="Send messages to your future self">
+    <meta author="Tau J. Marake" developer="Tau J. Marake">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="dark-mode">
+    <!-- Message Input Page -->
+    <div id="message-input" class="page active">
+        <div class="container">
+            <div class="theme-btn">
+                <button class="back-button" onclick="goBack()">← Back</button>
+                <button id="global-theme-toggle" class="theme-toggle">🌙</button>
+            </div>
+
+            <div class="message-form">
+                <h1 id="form-title">Message to Future You</h1>
+
+                <div class="form-group">
+                    <label id="title" for="message">What do you want to tell yourself?</label>
+                    <textarea id="message" placeholder="Type your message here..."></textarea>
+                </div>
+
+                <div class="form-group" id="email-group" style="display: none;">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" placeholder="your@email.com">
+                </div>
+
+                <div class="scheduling-section" id="scheduling-section" style="display: none;">
+                    <label class="scheduling-toggle">
+                        <input type="checkbox" id="schedule-checkbox" onchange="toggleScheduling()">
+                        <span>Schedule for later</span>
+                    </label>
+                    <div class="schedule-inputs" id="schedule-inputs">
+                        <input type="date" id="schedule-date">
+                        <input type="time" id="schedule-time">
+                    </div>
+                </div>
+
+                <button class="button button-primary" onclick="openConfirmation()">Next</button>
+                <button class="button button-secondary" onclick="goBack()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Message</h2>
+                <p>Review before sending</p>
+            </div>
+
+            <div class="modal-message" id="modal-message-display"></div>
+
+            <div class="modal-details" id="modal-details"></div>
+
+            <div class="modal-buttons">
+                <button class="confirm" onclick="sendMessage()">Send ✉️</button>
+                <button class="edit" onclick="closeConfirmation()">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="success-popup" class="success-popup" style="display: none;">
+        <h2>✨ Message Sent! ✨</h2>
+        <p id="success-message">Your message is on its way</p>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Sending message...</p>
+    </div>
+
+    <script src="./js/message-input.js"></script>
+</body>
+
+</html>
