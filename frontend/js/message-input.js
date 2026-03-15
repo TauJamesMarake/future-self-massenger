@@ -3,16 +3,14 @@ const API_URL = 'http://localhost:5000/api';
 let currentMode = 'future-self';
 let messageData = {};
 
-// Initialize page on load
 function initPage() {
     // Get mode from sessionStorage
     const mode = sessionStorage.getItem('messageMode') || 'future-self';
     currentMode = mode;
 
-    // Load saved theme
+
     loadTheme();
 
-    // Set up the form based on mode
     setupFormMode(mode);
 
     // Close modal when clicking outside
@@ -22,7 +20,6 @@ function initPage() {
         }
     });
 }
-// light/dark theme toggle
 const themeToggle = document.getElementById('global-theme-toggle');
 themeToggle.addEventListener('click', toggleTheme);
 
@@ -44,7 +41,6 @@ function toggleTheme() {
     }
 }
 
-// Load saved theme
 function loadTheme() {
     const savedTheme = localStorage.getItem('theme') || 'dark-mode';
     document.body.classList.remove('dark-mode', 'light-mode');
@@ -242,5 +238,4 @@ function goBack() {
     window.location.href = 'index.html';
 }
 
-// Initialize on page load
 initPage();

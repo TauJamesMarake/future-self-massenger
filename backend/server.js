@@ -8,13 +8,13 @@ const scheduler = require('./jobs/scheduler');
 
 const app = express();
 
-// Initialize Supabase client
+// 1. Initialize Supabase client
 const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_ANON_KEY
 );
 
-// Middleware
+// 2. Setup Middleware
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true
@@ -22,21 +22,21 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Make supabase available to routes
+// 3. Make supabase available to routes
 app.use((req, res, next) => {
     req.supabase = supabase;
     next();
 });
 
-// Routes
+// 4. Setup Routes
 app.use('/api/messages', messageRoutes);
 
-// Health check
+// 5. Setup Health check
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
 });
 
-// Test Supabase connection
+// 6. Test Supabase connection
 app.get('/api/test-connection', async (req, res) => {
     try {
         const { data, error } = await supabase

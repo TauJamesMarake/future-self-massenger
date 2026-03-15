@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const emailConfig = require('../config/email');
 
-// Send message immediately (developer messages)
+// Send message immediately
 router.post('/send-immediate', async (req, res) => {
     const { message } = req.body;
 

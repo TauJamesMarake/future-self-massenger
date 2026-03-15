@@ -10,7 +10,6 @@ body {
     overflow: hidden;
 }
 
-/* Dark Mode (Default) */
 body.dark-mode {
     background-color: #0f172a;
     color: #f8fafc;
@@ -83,7 +82,6 @@ body.light-mode {
 }
 
 .welcome-content h1 {
-    /* font-family: 'Fredoka One', sans-serif; */
     font-family: 'Bigskate', serif;
     font-size: 3.5rem;
     margin-bottom: 20px;
@@ -91,7 +89,6 @@ body.light-mode {
 }
 
 .welcome-content p {
-    /* font-family: 'Fredoka One', sans-serif; */
     font-family: 'Bigskate', serif;
     font-size: 1.3rem;
     margin-bottom: 20px;

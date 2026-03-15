@@ -1,5 +1,4 @@
 
-// light/dark theme toggle
 const themeToggle = document.getElementById('global-theme-toggle');
 themeToggle.addEventListener('click', toggleTheme);
 
@@ -30,8 +29,8 @@ function loadTheme() {
     themeToggle.textContent = savedTheme === 'dark-mode' ? '🌙' : '☀️';
 }
 
-// Navigate to message input page
 function goToPage(mode) {
+    // Navogation
     // Store the mode in sessionStorage
     sessionStorage.setItem('messageMode', mode);
     window.location.href = 'message-input.html';
@@ -43,5 +42,4 @@ setTimeout(() => {
     document.getElementById('homepage').classList.add('active');
 }, 3000);
 
-// Initialize theme on page load
 loadTheme();
